@@ -1,4 +1,4 @@
-import PostModel from '../models/PostModel.js'
+import Post from '../models/Post.js'
 import fileService from '../fileService.js'
 
 // бизнес логика
@@ -6,12 +6,12 @@ import fileService from '../fileService.js'
 class PostService {
   async create (post, picture) {
     const fileName = fileService.saveFile(picture)
-    const createdPost = await PostModel.create({ ...post, picture: fileName })
+    const createdPost = await Post.create({ ...post, picture: fileName })
     return createdPost
   }
 
   async getAll () {
-    const posts = await PostModel.find()
+    const posts = await Post.find()
     return posts
   }
 
@@ -19,7 +19,7 @@ class PostService {
     if (!id) {
       throw new Error('не указан ID')
     }
-    const post = await PostModel.findById(id)
+    const post = await Post.findById(id)
     return post
   }
 
@@ -27,7 +27,7 @@ class PostService {
     if (!post._id) {
       throw new Error('не указан ID')
     }
-    const updatedPost = await PostModel.findByIdAndUpdate(post._id, post, { new: true })
+    const updatedPost = await Post.findByIdAndUpdate(post._id, post, { new: true })
     return updatedPost
   }
 
@@ -35,7 +35,7 @@ class PostService {
     if (!id) {
       throw new Error('не указан ID')
     }
-    const post = await PostModel.findByIdAndDelete(id)
+    const post = await Post.findByIdAndDelete(id)
     return post
   }
 }
